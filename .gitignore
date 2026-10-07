@@ -1,0 +1,102 @@
+# ============================================================
+# CampusOne - Git Ignore
+# ============================================================
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Next.js / Node
+node_modules/
+.next/
+out/
+dist/
+build/
+.turbo/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# CampusOne local cache
+.campusone_cache/
+backend/.campusone_cache/
+
+# Old development datasets
+backend/campusone_v2_temp/
+backend/knowledge_v2/
+backend/knowledge_v4_staging/
+backend/knowledge_v4_1_staging/
+backend/knowledge_v5_staging/
+backend/knowledge_v5_1_staging/
+backend/knowledge_v5_2_staging/
+backend/knowledge_v5_3_staging/
+backend/knowledge_v6_staging/
+backend/knowledge_v7/
+backend/knowledge_real_v2/
+
+# Old / legacy knowledge base
+backend/knowledge/
+
+# Backups
+*backup*/
+backend/knowledge_real_backup_*/
+backend/data/backups/
+*.bak
+
+# Raw scraped/source data
+backend/data/admission_raw/
+
+# Generated evaluation output
+backend/data/evaluation/*.json
+
+# Generated ingestion reports
+backend/data/ingestion_reports/
+
+# Large local datasets
+dataset/
+datasets/
+data/raw/
+*.csv
+*.tsv
+
+# Archives
+*.zip
+
+# Development patch artifacts
+CampusOne_V6_Targeted_Source_Expansion.json
+CampusOne_final_kb_patch.jsonl
+CampusOne_priority_kb_patch.jsonl
+apply_CampusOne_final_patch.py
+apply_CampusOne_priority_kb.py
+apply_campusone_v6_source_expansion.py
+
+# Router development backups
+backend/app/router/router_backup.py
+backend/app/router/router_before_routing_patch.py
+
+# Development source metadata / reports
+backend/data/admission_ingestion_report.json
+backend/data/bennett_admission_sources.json
+backend/data/campus_sources.json
+backend/data/campus_sources_backup_*
+backend/data/evaluation/
+backend/data/router_examples.json
