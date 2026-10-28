@@ -11,9 +11,14 @@ export type Source = {
   score?: number;
 };
 
+export type ChatTurn = {
+  role: "user" | "assistant";
+  content: string;
+};
+
 export type AskResponse = {
   message: string;
-  decision?: "ROUTE" | "CLARIFY" | "HANDOFF" | string;
+  decision?: "ROUTE" | "CLARIFY" | "HANDOFF" | "NOT_FOUND" | string;
   domain?: string | null;
   routing?: {
     domain?: string | null;
@@ -28,13 +33,16 @@ export type AskResponse = {
   sources?: Source[];
 };
 
-export async function askCampusOne(question: string): Promise<AskResponse> {
+export async function askCampusOne(
+  question: string,
+  history: ChatTurn[] = [],
+): Promise<AskResponse> {
   const response = await fetch("/api/ask", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ question }),
+    body: JSON.stringify({ question, history: history.slice(-10) }),
   });
 
   const data = await response.json().catch(() => null);
