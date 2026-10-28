@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { AssistantInput } from "@/components/assistant-input";
 import { AssistantMessage } from "@/components/assistant-message";
-import { askCampusOne, type AskResponse } from "@/lib/api";
+import { askCampusOne, type AskResponse, type ChatTurn } from "@/lib/api";
 
 const services = [
   {
@@ -63,6 +63,7 @@ export default function HomePage() {
   const [response, setResponse] = useState<AskResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [history, setHistory] = useState<ChatTurn[]>([]);
 
   async function handleAsk(value: string) {
     setQuestion("");
@@ -72,8 +73,13 @@ export default function HomePage() {
     setLoading(true);
 
     try {
-      const result = await askCampusOne(value);
+      const result = await askCampusOne(value, history);
       setResponse(result);
+      setHistory((previous) => [
+        ...previous,
+        { role: "user", content: value },
+        { role: "assistant", content: result.message },
+      ].slice(-20));
     } catch (err) {
       setError(
         err instanceof Error
@@ -90,6 +96,7 @@ export default function HomePage() {
     setSubmittedQuestion("");
     setQuestion("");
     setError("");
+    setHistory([]);
   }
 
   const conversationStarted = Boolean(
