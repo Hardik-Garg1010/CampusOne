@@ -62,7 +62,13 @@ def _is_context_dependent_followup(question: str) -> bool:
         "can you explain that",
         "what does that mean",
     )
-    return len(q.split()) <= 12 or any(marker in q for marker in markers)
+    starts_with_reference = q.startswith((
+        "and ", "also ", "it ", "they ", "them ", "that ", "those ",
+        "these ", "its ", "their ", "there ", "then ",
+    ))
+    return len(q.split()) <= 3 or starts_with_reference or any(
+        marker in q for marker in markers
+    )
 
 
 def _conversation_context(history: list[ChatMessage]) -> str:
