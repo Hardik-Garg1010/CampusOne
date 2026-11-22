@@ -299,7 +299,15 @@ for domain in DOMAINS:
 
     # ------------------------------------------------------------
     # Curated Bennett service domains
-    # ------------------------------------------------------------
+    # -----------------------------------
+
+        # Include curated admission records alongside V6 admission data.
+    if domain == "admission":
+        path = SRC / "admission" / "bennett_admission_kb.jsonl"
+        if path.exists():
+            loaded = read_jsonl(path, domain)
+            add_records(records, loaded)
+            print(f"[ADMISSION] Added curated records: {len(loaded)}")
     if domain in CURATED_JSONL:
         for filename in CURATED_JSONL[domain]:
             path = SRC / domain / filename

@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://127.0.0.1:8000";
 
+type HistoryItem = {
+  role: "user" | "assistant";
+  content: string;
+};
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -18,7 +23,7 @@ export async function POST(request: Request) {
     // Accept only the minimal, bounded conversation shape expected by the API.
     const safeHistory = history
       .filter(
-        (item: unknown): item is { role: "user" | "assistant"; content: string } =>
+        (item: unknown): item is HistoryItem =>
           typeof item === "object" &&
           item !== null &&
           "role" in item &&
@@ -28,7 +33,7 @@ export async function POST(request: Request) {
           typeof (item as { content: unknown }).content === "string",
       )
       .slice(-10)
-      .map((item) => ({
+      .map((item: HistoryItem) => ({
         role: item.role,
         content: item.content.slice(0, 4000),
       }));

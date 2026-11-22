@@ -75,11 +75,13 @@ export default function HomePage() {
     try {
       const result = await askCampusOne(value, history);
       setResponse(result);
-      setHistory((previous) => [
-        ...previous,
-        { role: "user", content: value },
-        { role: "assistant", content: result.message },
-      ].slice(-20));
+      setHistory((previous) =>
+  [
+    ...previous,
+    { role: "user" as const, content: value },
+    { role: "assistant" as const, content: result.message },
+  ].slice(-20),
+);
     } catch (err) {
       setError(
         err instanceof Error
@@ -167,14 +169,10 @@ export default function HomePage() {
           >
             Services
           </button>
-          <button className="rounded-full px-4 py-2 text-[13px] text-black/45 transition hover:bg-white/50 hover:text-black">
-            About
-          </button>
+          
         </div>
 
-        <button className="glass rounded-full px-4 py-2.5 text-[13px] font-medium transition hover:bg-white/70">
-          Student Portal
-        </button>
+        
       </nav>
 
       <AnimatePresence mode="wait">
