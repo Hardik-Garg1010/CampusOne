@@ -75,11 +75,13 @@ export default function HomePage() {
     try {
       const result = await askCampusOne(value, history);
       setResponse(result);
-      setHistory((previous) => [
-        ...previous,
-        { role: "user", content: value },
-        { role: "assistant", content: result.message },
-      ].slice(-20));
+      setHistory((previous) =>
+  [
+    ...previous,
+    { role: "user" as const, content: value },
+    { role: "assistant" as const, content: result.message },
+  ].slice(-20),
+);
     } catch (err) {
       setError(
         err instanceof Error
